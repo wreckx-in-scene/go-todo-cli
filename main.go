@@ -3,9 +3,13 @@ package main
 import (
 	"fmt"
 	"os"
+	"strconv"
 )
 
 func main() {
+	//load todos into the todo slice
+	LoadTodos()
+
 	if len(os.Args) < 2 {
 		fmt.Println("Welcome to Todo CLI")
 		fmt.Println("Commands:")
@@ -21,8 +25,18 @@ func main() {
 	switch command {
 	case "add":
 		AddTodo(os.Args[2])
+		SaveTodos()
+		fmt.Println("Todo added!")
 	case "list":
 		ListTodos()
+	case "done":
+		id, _ := strconv.Atoi(os.Args[2])
+		MarkTodo(id)
+		SaveTodos()
+	case "delete":
+		id, _ := strconv.Atoi(os.Args[2])
+		DeletTodo(id)
+		SaveTodos()
 	default:
 		fmt.Println("Unknown command")
 	}
